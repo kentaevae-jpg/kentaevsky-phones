@@ -1,0 +1,1661 @@
+<!DOCTYPE html>  <html lang="ru">    <head>    
+<meta charset="UTF-8">    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Kentaevsky Phones</title>  <style>    
+* {    
+  box-sizing: border-box;    
+}    body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: #f2f4f7;
+color: #171717;
+transition: 0.3s;
+}
+
+/* HEADER */
+
+header {
+position: sticky;
+top: 0;
+z-index: 20;
+
+background: rgba(255,255,255,0.95);
+backdrop-filter: blur(15px);
+
+padding: 14px 16px;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+border-bottom: 1px solid #ddd;
+}
+
+.logo {
+font-size: 21px;
+font-weight: bold;
+}
+
+#theme {
+width: 42px;
+height: 42px;
+
+border: 0;
+border-radius: 50%;
+
+background: #eee;
+
+font-size: 19px;
+}
+
+/* SEARCH */
+
+.search-box {
+padding: 16px;
+background: white;
+}
+
+#search {
+width: 100%;
+
+padding: 15px 17px;
+
+border: 1px solid #ddd;
+border-radius: 12px;
+
+outline: none;
+
+font-size: 16px;
+}
+
+/* BRANDS */
+
+.brands-title {
+padding: 18px 16px 8px;
+font-size: 18px;
+font-weight: bold;
+}
+
+.brands {
+padding: 8px 16px 16px;
+
+display: flex;
+gap: 8px;
+
+overflow-x: auto;
+
+background: white;
+}
+
+.brand-button {
+flex-shrink: 0;
+
+padding: 10px 15px;
+
+border: 1px solid #ddd;
+border-radius: 20px;
+
+background: white;
+
+font-size: 14px;
+}
+
+.brand-button.active {
+background: #111;
+color: white;
+border-color: #111;
+}
+
+/* CATALOG */
+
+.catalog-title {
+padding: 20px 16px 5px;
+
+font-size: 22px;
+font-weight: bold;
+}
+
+#phones {
+padding: 12px 16px 30px;
+
+display: grid;
+
+grid-template-columns: repeat(2, minmax(0, 1fr));
+
+gap: 12px;
+}
+
+/* PHONE CARD */
+
+.phone-card {
+background: white;
+
+border: 1px solid #e2e2e2;
+
+border-radius: 16px;
+
+padding: 12px;
+
+overflow: hidden;
+}
+
+.phone-photo {overflow: hidden;
+
+
+.phone-photo img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+display: block;
+}
+
+border-radius: 12px;
+
+background: linear-gradient(135deg, #eeeeee, #dcdcdc);
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+font-size: 48px;
+}
+
+.phone-name {
+margin-top: 12px;
+
+font-size: 17px;
+font-weight: bold;
+}
+
+.phone-brand {
+margin-top: 4px;
+
+font-size: 13px;
+
+color: #777;
+}
+
+.phone-rating {
+margin-top: 9px;
+
+font-size: 14px;
+}
+
+.phone-specs {
+margin-top: 9px;
+
+font-size: 12px;
+
+color: #666;
+
+line-height: 1.6;
+}
+
+.details-button {
+width: 100%;
+
+margin-top: 12px;
+
+padding: 10px;
+
+border: 0;
+border-radius: 10px;
+
+background: #111;
+color: white;
+
+font-size: 14px;
+}
+
+/* EMPTY */
+
+#nothing {
+display: none;
+
+padding: 60px 20px;
+
+text-align: center;
+
+color: #777;
+}
+
+/* MODAL */
+
+#modal {
+display: none;
+
+position: fixed;
+
+z-index: 100;
+
+inset: 0;
+
+padding: 20px;
+
+background: rgba(0,0,0,0.65);
+}
+
+.modal-box {
+max-width: 520px;
+
+max-height: 85vh;
+
+overflow-y: auto;
+
+margin: 40px auto;
+
+padding: 22px;
+
+border-radius: 20px;
+
+background: white;
+}
+
+.close-button {
+float: right;
+
+width: 36px;
+height: 36px;
+
+border: 0;
+border-radius: 50%;
+
+background: #eee;
+
+font-size: 20px;
+}
+
+.modal-photo {
+height: 220px;
+
+margin: 10px 0 20px;
+
+border-radius: 15px;
+
+background: linear-gradient(135deg,#eee,#ddd);
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+font-size: 60px;
+}
+
+.spec-row {
+padding: 12px 0;
+
+border-bottom: 1px solid #ddd;
+}
+
+.spec-name {
+font-size: 13px;
+color: #777;
+}
+
+.spec-value {
+margin-top: 4px;
+font-size: 16px;
+font-weight: bold;
+}
+
+/* DARK */
+
+body.dark {
+background: #101010;
+color: white;
+}
+
+body.dark header,
+body.dark .search-box,
+body.dark .brands {
+background: #181818;
+border-color: #333;
+}
+
+body.dark #search {
+background: #252525;
+color: white;
+border-color: #444;
+}
+
+body.dark .brand-button {
+background: #222;
+color: white;
+border-color: #444;
+}
+
+body.dark .brand-button.active {
+background: white;
+color: black;
+}
+
+body.dark .phone-card {
+background: #1b1b1b;
+border-color: #333;
+}
+
+body.dark .phone-photo,
+body.dark .modal-photo {
+background: linear-gradient(135deg,#292929,#1c1c1c);
+}
+
+body.dark .phone-brand,
+body.dark .phone-specs {
+color: #aaa;
+}
+
+body.dark .details-button {
+background: white;
+color: black;
+}
+
+body.dark .modal-box {
+background: #1b1b1b;
+}
+
+body.dark .spec-row {
+border-color: #333;
+}
+
+body.dark .spec-name {
+color: #aaa;
+}
+
+/* PHONE ON SMALL SCREENS */
+
+@media (max-width: 380px) {
+
+#phones {
+grid-template-columns: 1fr;
+}
+
+}
+</style>  </head>  <body>  <header>    <div class="logo">
+📱 Kentaevsky
+
+  </div>    <button id="theme" onclick="changeTheme()">    
+    🌙    
+  </button>  </header>  <div class="search-box">  <input  
+id="search"  
+type="text"  
+placeholder="🔍 Найти смартфон..."  
+oninput="updateCatalog()"  > 
+
+</div>  <div class="brands-title">    
+  Бренды    
+</div>  <div class="brands">  <button class="brand-button active"    
+onclick="selectBrand('Все', this)">  
+Все  
+</button>  <button class="brand-button"    
+onclick="selectBrand('Samsung', this)">
+Samsung
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('Apple', this)">
+iPhone
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('Xiaomi', this)">
+Xiaomi
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('Redmi', this)">
+Redmi
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('POCO', this)">
+POCO
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('vivo', this)">
+vivo
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('iQOO', this)">
+iQOO
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('OnePlus', this)">
+OnePlus
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('OPPO', this)">
+OPPO
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('realme', this)">
+realme
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('Honor', this)">
+Honor
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('Huawei', this)">
+Huawei
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('Google', this)">
+Pixel
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('Motorola', this)">
+Motorola
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('Sony', this)">
+Sony
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('ASUS', this)">
+ASUS
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('Nothing', this)">
+Nothing
+</button>
+
+<button class="brand-button"    
+onclick="selectBrand('ZTE', this)">
+ZTE
+</button>
+
+</div>  <div class="catalog-title">    
+  Смартфоны    
+</div>  <div id="phones"></div>  <div id="nothing">    
+  😕<br><br>    
+  Смартфон не найден    
+</div>  <!-- DETAILS -->  <div id="modal">    <div class="modal-box">  <button class="close-button" onclick="closeModal()">    
+  ×    
+</button>    <div id="modalContent"></div>    </div>  </div>  <script>    /* =========================
+DATABASE
+========================= */
+
+const phones = [
+
+{
+name: "Galaxy S26 Ultra",
+brand: "Samsung",
+rating: "9.5",
+screen: "6.9″",
+display: "AMOLED, 120 Hz",
+chipset: "Snapdragon",
+camera: "200 MP",
+battery: "5000 mAh",
+storage: "256 GB / 512 GB / 1 TB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+
+
+{
+  name: "iPhone 6",
+  brand: "Apple",
+  rating: "8.0",
+  screen: "4.7″",
+  display: "IPS LCD",
+  chipset: "Apple A8",
+  camera: "8 MP",
+  battery: "1810 mAh",
+  storage: "16 / 32 / 64 / 128 GB",
+  ram: "1 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-6-4.jpg"
+},
+
+{
+  name: "iPhone 6 Plus",
+  brand: "Apple",
+  rating: "8.1",
+  screen: "5.5″",
+  display: "IPS LCD",
+  chipset: "Apple A8",
+  camera: "8 MP",
+  battery: "2915 mAh",
+  storage: "16 / 64 / 128 GB",
+  ram: "1 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-6-plus.jpg"
+},
+
+{
+  name: "iPhone 6s",
+  brand: "Apple",
+  rating: "8.2",
+  screen: "4.7″",
+  display: "IPS LCD",
+  chipset: "Apple A9",
+  camera: "12 MP",
+  battery: "1715 mAh",
+  storage: "16 / 32 / 64 / 128 GB",
+  ram: "2 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-6s.jpg"
+  
+},
+
+{
+  name: "iPhone 6s Plus",
+  brand: "Apple",
+  rating: "8.3",
+  screen: "5.5″",
+  display: "IPS LCD",
+  chipset: "Apple A9",
+  camera: "12 MP",
+  battery: "2750 mAh",
+  storage: "16 / 32 / 64 / 128 GB",
+  ram: "2 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-6s-plus.jpg"
+},
+
+{
+  name: "iPhone SE",
+  brand: "Apple",
+  rating: "8.0",
+  screen: "4.0″",
+  display: "IPS LCD",
+  chipset: "Apple A9",
+  camera: "12 MP",
+  battery: "1624 mAh",
+  storage: "16 / 32 / 64 / 128 GB",
+  ram: "2 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-6-plus.jpg"
+},
+
+{
+  name: "iPhone 7",
+  brand: "Apple",
+  rating: "8.3",
+  screen: "4.7″",
+  display: "IPS LCD",
+  chipset: "Apple A10 Fusion",
+  camera: "12 MP",
+  battery: "1960 mAh",
+  storage: "32 / 128 / 256 GB",
+  ram: "2 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-7r4.jpg"
+},
+
+{
+  name: "iPhone 7 Plus",
+  brand: "Apple",
+  rating: "8.5",
+  screen: "5.5″",
+  display: "IPS LCD",
+  chipset: "Apple A10 Fusion",
+  camera: "12 MP Dual",
+  battery: "2900 mAh",
+  storage: "32 / 128 / 256 GB",
+  ram: "3 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-7-plus-r2.jpg"
+},
+
+{
+  name: "iPhone 8",
+  brand: "Apple",
+  rating: "8.4",
+  screen: "4.7″",
+  display: "IPS LCD",
+  chipset: "Apple A11 Bionic",
+  camera: "12 MP",
+  battery: "1821 mAh",
+  storage: "64 / 128 / 256 GB",
+  ram: "2 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-8.jpg"
+},
+
+{
+  name: "iPhone 8 Plus",
+  brand: "Apple",
+  rating: "8.6",
+  screen: "5.5″",
+  display: "IPS LCD",
+  chipset: "Apple A11 Bionic",
+  camera: "12 MP Dual",
+  battery: "2691 mAh",
+  storage: "64 / 128 / 256 GB",
+  ram: "3 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-8-plus.jpg"
+},
+
+{
+  name: "iPhone X",
+  brand: "Apple",
+  rating: "8.8",
+  screen: "5.8″",
+  display: "OLED, 60 Hz",
+  chipset: "Apple A11 Bionic",
+  camera: "12 MP Dual",
+  battery: "2716 mAh",
+  storage: "64 / 256 GB",
+  ram: "3 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-x.jpg"
+},
+
+{
+  name: "iPhone XR",
+  brand: "Apple",
+  rating: "8.7",
+  screen: "6.1″",
+  display: "IPS LCD",
+  chipset: "Apple A12 Bionic",
+  camera: "12 MP",
+  battery: "2942 mAh",
+  storage: "64 / 128 / 256 GB",
+  ram: "3 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-xr.jpg"
+},
+
+{
+  name: "iPhone XS",
+  brand: "Apple",
+  rating: "8.8",
+  screen: "5.8″",
+  display: "OLED",
+  chipset: "Apple A12 Bionic",
+  camera: "12 MP Dual",
+  battery: "2658 mAh",
+  storage: "64 / 256 / 512 GB",
+  ram: "4 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-xs.jpg"
+},
+
+{
+  name: "iPhone XS Max",
+  brand: "Apple",
+  rating: "8.9",
+  screen: "6.5″",
+  display: "OLED",
+  chipset: "Apple A12 Bionic",
+  camera: "12 MP Dual",
+  battery: "3174 mAh",
+  storage: "64 / 256 / 512 GB",
+  ram: "4 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-xs-max.jpg"
+},
+
+{
+  name: "iPhone 11",
+  brand: "Apple",
+  rating: "9.0",
+  screen: "6.1″",
+  display: "Liquid Retina",
+  chipset: "Apple A13 Bionic",
+  camera: "12 MP Dual",
+  battery: "3110 mAh",
+  storage: "64 / 128 / 256 GB",
+  ram: "4 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-11.jpg"
+},
+
+{
+  name: "iPhone 11 Pro",
+  brand: "Apple",
+  rating: "9.1",
+  screen: "5.8″",
+  display: "OLED",
+  chipset: "Apple A13 Bionic",
+  camera: "12 MP Triple",
+  battery: "3046 mAh",
+  storage: "64 / 256 / 512 GB",
+  ram: "4 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-11-pro.jpg"
+},
+
+{
+  name: "iPhone 11 Pro Max",
+  brand: "Apple",
+  rating: "9.2",
+  screen: "6.5″",
+  display: "OLED",
+  chipset: "Apple A13 Bionic",
+  camera: "12 MP Triple",
+  battery: "3969 mAh",
+  storage: "64 / 256 / 512 GB",
+  ram: "4 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-11-pro.jpg"
+},
+
+{
+  name: "iPhone 12",
+  brand: "Apple",
+  rating: "9.1",
+  screen: "6.1″",
+  display: "OLED",
+  chipset: "Apple A14 Bionic",
+  camera: "12 MP Dual",
+  battery: "2815 mAh",
+  storage: "64 / 128 / 256 GB",
+  ram: "4 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12.jpg"
+},
+
+{
+  name: "iPhone 12 mini",
+  brand: "Apple",
+  rating: "9.0",
+  screen: "5.4″",
+  display: "OLED",
+  chipset: "Apple A14 Bionic",
+  camera: "12 MP Dual",
+  battery: "2227 mAh",
+  storage: "64 / 128 / 256 GB",
+  ram: "4 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12.jpg"
+},
+
+{
+  name: "iPhone 12 Pro",
+  brand: "Apple",
+  rating: "9.2",
+  screen: "6.1″",
+  display: "OLED",
+  chipset: "Apple A14 Bionic",
+  camera: "12 MP Triple",
+  battery: "2815 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12-pro--.jpg"
+},
+
+{
+  name: "iPhone 12 Pro Max",
+  brand: "Apple",
+  rating: "9.3",
+  screen: "6.7″",
+  display: "OLED",
+  chipset: "Apple A14 Bionic",
+  camera: "12 MP Triple",
+  battery: "3687 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-12-pro-max-.jpg"
+},
+
+{
+  name: "iPhone 13",
+  brand: "Apple",
+  rating: "9.3",
+  screen: "6.1″",
+  display: "OLED",
+  chipset: "Apple A15 Bionic",
+  camera: "12 MP Dual",
+  battery: "3227 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "4 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13.jpg"
+},
+
+{
+  name: "iPhone 13 mini",
+  brand: "Apple",
+  rating: "9.2",
+  screen: "5.4″",
+  display: "OLED",
+  chipset: "Apple A15 Bionic",
+  camera: "12 MP Dual",
+  battery: "2406 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "4 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13-mini.jpg"
+},
+
+{
+  name: "iPhone 13 Pro",
+  brand: "Apple",
+  rating: "9.4",
+  screen: "6.1″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A15 Bionic",
+  camera: "12 MP Triple",
+  battery: "3095 mAh",
+  storage: "128 / 256 / 512 GB / 1 TB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13-pro.jpg"
+},
+
+{
+  name: "iPhone 13 Pro Max",
+  brand: "Apple",
+  rating: "9.5",
+  screen: "6.7″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A15 Bionic",
+  camera: "12 MP Triple",
+  battery: "4352 mAh",
+  storage: "128 / 256 / 512 GB / 1 TB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13-pro.jpg"
+},
+
+{
+  name: "iPhone 14",
+  brand: "Apple",
+  rating: "9.2",
+  screen: "6.1″",
+  display: "OLED",
+  chipset: "Apple A15 Bionic",
+  camera: "12 MP Dual",
+  battery: "3279 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14.jpg"
+},
+
+{
+  name: "iPhone 14 Plus",
+  brand: "Apple",
+  rating: "9.3",
+  screen: "6.7″",
+  display: "OLED",
+  chipset: "Apple A15 Bionic",
+  camera: "12 MP Dual",
+  battery: "4323 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-plus.jpg"
+},
+
+{
+  name: "iPhone 14 Pro",
+  brand: "Apple",
+  rating: "9.5",
+  screen: "6.1″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A16 Bionic",
+  camera: "48 MP Triple",
+  battery: "3200 mAh",
+  storage: "128 / 256 / 512 GB / 1 TB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro.jpg"
+},
+
+{
+  name: "iPhone 14 Pro Max",
+  brand: "Apple",
+  rating: "9.6",
+  screen: "6.7″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A16 Bionic",
+  camera: "48 MP Triple",
+  battery: "4323 mAh",
+  storage: "128 / 256 / 512 GB / 1 TB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro.jpg"
+},
+
+{
+  name: "iPhone 15",
+  brand: "Apple",
+  rating: "9.3",
+  screen: "6.1″",
+  display: "OLED",
+  chipset: "Apple A16 Bionic",
+  camera: "48 MP Dual",
+  battery: "3349 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg"
+},
+
+{
+  name: "iPhone 15 Plus",
+  brand: "Apple",
+  rating: "9.4",
+  screen: "6.7″",
+  display: "OLED",
+  chipset: "Apple A16 Bionic",
+  camera: "48 MP Dual",
+  battery: "4383 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "6 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg"
+},
+
+{
+  name: "iPhone 15 Pro",
+  brand: "Apple",
+  rating: "9.6",
+  screen: "6.1″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A17 Pro",
+  camera: "48 MP Triple",
+  battery: "3274 mAh",
+  storage: "128 / 256 / 512 GB / 1 TB",
+  ram: "8 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro.jpg"
+},
+
+{
+  name: "iPhone 15 Pro Max",
+  brand: "Apple",
+  rating: "9.7",
+  screen: "6.7″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A17 Pro",
+  camera: "48 MP Triple",
+  battery: "4441 mAh",
+  storage: "256 / 512 GB / 1 TB",
+  ram: "8 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg"
+},
+
+{
+  name: "iPhone 16",
+  brand: "Apple",
+  rating: "9.4",
+  screen: "6.1″",
+  display: "OLED",
+  chipset: "Apple A18",
+  camera: "48 MP Dual",
+  battery: "3561 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "8 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg"
+},
+
+{
+  name: "iPhone 16 Plus",
+  brand: "Apple",
+  rating: "9.5",
+  screen: "6.7″",
+  display: "OLED",
+  chipset: "Apple A18",
+  camera: "48 MP Dual",
+  battery: "4674 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "8 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg"
+},
+
+{
+  name: "iPhone 16 Pro",
+  brand: "Apple",
+  rating: "9.7",
+  screen: "6.3″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A18 Pro",
+  camera: "48 MP Triple",
+  battery: "3582 mAh",
+  storage: "128 / 256 / 512 GB / 1 TB",
+  ram: "8 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg"
+},
+
+{
+  name: "iPhone 16 Pro Max",
+  brand: "Apple",
+  rating: "9.8",
+  screen: "6.9″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A18 Pro",
+  camera: "48 MP Triple",
+  battery: "4685 mAh",
+  storage: "256 / 512 GB / 1 TB",
+  ram: "8 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg"
+},
+
+{
+  name: "iPhone 16e",
+  brand: "Apple",
+  rating: "9.1",
+  screen: "6.1″",
+  display: "OLED",
+  chipset: "Apple A18",
+  camera: "48 MP",
+  battery: "4005 mAh",
+  storage: "128 / 256 / 512 GB",
+  ram: "8 GB",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16e.jpg"
+},
+
+{
+  name: "iPhone 17",
+  brand: "Apple",
+  rating: "9.5",
+  screen: "6.3″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A19",
+  camera: "48 MP Dual",
+  battery: "3692mAh",
+  storage: "256 / 512 GB",
+  ram: "8",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg"
+},
+
+{
+  name: "iPhone Air",
+  brand: "Apple",
+  rating: "9.4",
+  screen: "6.6″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A19",
+  camera: "48 MP",
+  battery: "3149mAh",
+  storage: "256 / 512 GB / 1 TB",
+  ram: "12",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-air.jpg"
+},
+
+{
+  name: "iPhone 17 Pro",
+  brand: "Apple",
+  rating: "9.7",
+  screen: "6.3″",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A19 Pro",
+  camera: "48 MP Triple",
+  battery: "3998mAh",
+  storage: "256 / 512 GB / 1 TB",
+  ram: "12",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg"
+},
+
+{
+  name: "iPhone 17 Pro Max",
+  brand: "Apple",
+  rating: "9.8",
+  screen: "6.9\"",
+  display: "OLED, 120 Hz",
+  chipset: "Apple A19 Pro",
+  camera: "48 MP Triple",
+  battery: "4823mAh",
+  storage: "256 / 512 GB / 1 TB /2 TB",
+  ram: "12",
+  os: "iOS",
+  image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg"
+},
+  
+  
+
+{
+name: "Xiaomi 15",
+brand: "Xiaomi",
+rating: "9.3",
+screen: "6.36″",
+display: "AMOLED, 120 Hz",
+chipset: "Snapdragon 8 Elite",
+camera: "50 MP",
+battery: "5240 mAh",
+storage: "256 / 512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+{
+name: "Redmi Note 14 Pro",
+brand: "Redmi",
+rating: "8.9",
+screen: "6.67″",
+display: "AMOLED, 120 Hz",
+chipset: "MediaTek",
+camera: "200 MP",
+battery: "5500 mAh",
+storage: "256 / 512 GB",
+ram: "8 / 12 GB",
+os: "Android"
+},
+
+{
+name: "POCO F7",
+brand: "POCO",
+rating: "9.0",
+screen: "6.83″",
+display: "AMOLED, 120 Hz",
+chipset: "Snapdragon",
+camera: "50 MP",
+battery: "6500 mAh",
+storage: "256 / 512 GB",
+ram: "12 GB",
+os: "Android"
+},
+
+{
+name: "vivo X200",
+brand: "vivo",
+rating: "9.4",
+screen: "6.67″",
+display: "AMOLED, 120 Hz",
+chipset: "Dimensity",
+camera: "50 MP",
+battery: "5800 mAh",
+storage: "256 / 512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+{
+name: "iQOO Z11 Turbo",
+brand: "iQOO",
+rating: "9.1",
+screen: "6.78″",
+display: "AMOLED, 144 Hz",
+chipset: "Snapdragon",
+camera: "50 MP",
+battery: "7000 mAh",
+storage: "256 / 512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+{
+name: "OnePlus 13",
+brand: "OnePlus",
+rating: "9.4",
+screen: "6.82″",
+display: "AMOLED, 120 Hz",
+chipset: "Snapdragon 8 Elite",
+camera: "50 MP",
+battery: "6000 mAh",
+storage: "256 / 512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+{
+name: "OPPO Find X8 Pro",
+brand: "OPPO",
+rating: "9.3",
+screen: "6.78″",
+display: "AMOLED, 120 Hz",
+chipset: "Dimensity",
+camera: "50 MP",
+battery: "5910 mAh",
+storage: "256 / 512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+{
+name: "realme GT 7",
+brand: "realme",
+rating: "9.0",
+screen: "6.78″",
+display: "AMOLED, 120 Hz",
+chipset: "Dimensity",
+camera: "50 MP",
+battery: "7000 mAh",
+storage: "256 / 512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+{
+name: "Honor Magic7 Pro",
+brand: "Honor",
+rating: "9.2",
+screen: "6.8″",
+display: "OLED, 120 Hz",
+chipset: "Snapdragon",
+camera: "50 MP",
+battery: "5850 mAh",
+storage: "512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+{
+name: "Huawei Pura 70 Ultra",
+brand: "Huawei",
+rating: "9.0",
+screen: "6.8″",
+display: "OLED, 120 Hz",
+chipset: "Kirin",
+camera: "50 MP",
+battery: "5050 mAh",
+storage: "512 GB / 1 TB",
+ram: "16 GB",
+os: "HarmonyOS"
+},
+
+{
+name: "Pixel 10 Pro",
+brand: "Google",
+rating: "9.1",
+screen: "6.3″",
+display: "OLED, 120 Hz",
+chipset: "Google Tensor",
+camera: "50 MP",
+battery: "4870 mAh",
+storage: "128 / 256 / 512 GB",
+ram: "16 GB",
+os: "Android"
+},
+
+{
+name: "Motorola Edge 60 Pro",
+brand: "Motorola",
+rating: "8.8",
+screen: "6.7″",
+display: "pOLED, 120 Hz",
+chipset: "MediaTek",
+camera: "50 MP",
+battery: "6000 mAh",
+storage: "256 / 512 GB",
+ram: "8 / 12 GB",
+os: "Android"
+},
+
+{
+name: "Xperia 1 VII",
+brand: "Sony",
+rating: "8.8",
+screen: "6.5″",
+display: "OLED",
+chipset: "Snapdragon",
+camera: "48 MP",
+battery: "5000 mAh",
+storage: "256 GB",
+ram: "12 GB",
+os: "Android"
+},
+
+{
+name: "ROG Phone 9",
+brand: "ASUS",
+rating: "9.2",
+screen: "6.78″",
+display: "AMOLED, 185 Hz",
+chipset: "Snapdragon",
+camera: "50 MP",
+battery: "5800 mAh",
+storage: "256 / 512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+{
+name: "Nothing Phone (3)",
+brand: "Nothing",
+rating: "8.9",
+screen: "6.67″",
+display: "AMOLED, 120 Hz",
+chipset: "Snapdragon",
+camera: "50 MP",
+battery: "5150 mAh",
+storage: "256 / 512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+},
+
+{
+name: "nubia RedMagic 10 Pro",
+brand: "ZTE",
+rating: "9.3",
+screen: "6.85″",
+display: "AMOLED, 144 Hz",
+chipset: "Snapdragon",
+camera: "50 MP",
+battery: "7050 mAh",
+storage: "256 / 512 GB",
+ram: "12 / 16 GB",
+os: "Android"
+}
+
+];
+
+/* =========================
+CURRENT FILTER
+========================= */
+
+let currentBrand = "Все";
+
+/* =========================
+SHOW PHONES
+========================= */
+
+function showPhones(list) {
+
+const container =
+document.getElementById("phones");
+
+container.innerHTML = "";
+
+list.forEach(function(phone) {
+
+const card =    
+  document.createElement("div");    
+
+card.className = "phone-card";    
+
+card.innerHTML = `    
+
+  <div class="phone-photo">
+  ${phone.image
+    ? `<img src="${phone.image}" alt="${phone.name}">`
+    : "📱"}
+</div>
+
+  <div class="phone-name">    
+    ${phone.name}    
+  </div>    
+
+  <div class="phone-brand">    
+    ${phone.brand}    
+  </div>    
+
+  <div class="phone-rating">    
+    ⭐ ${phone.rating}    
+  </div>    
+
+  <div class="phone-specs">    
+
+    📺 ${phone.screen}<br>    
+
+    ⚡ ${phone.chipset}<br>    
+
+    📸 ${phone.camera}<br>    
+
+    🔋 ${phone.battery}    
+
+  </div>    
+
+  <button    
+    class="details-button"    
+    onclick="openDetails('${phone.name}')">    
+
+    Подробнее    
+
+  </button>    
+`;    
+
+container.appendChild(card);
+
+});
+
+document.getElementById("nothing").style.display =
+list.length === 0 ? "block" : "none";
+}
+
+/* =========================
+SEARCH + FILTER
+========================= */
+
+function updateCatalog() {
+
+const text =
+document
+.getElementById("search")
+.value
+.toLowerCase()
+.trim();
+
+const result =
+phones.filter(function(phone) {
+
+const matchesText =    
+    phone.name    
+      .toLowerCase()    
+      .includes(text);    
+
+  const matchesBrand =    
+    currentBrand === "Все" ||    
+    phone.brand === currentBrand;    
+
+  return matchesText && matchesBrand;    
+
+});
+
+showPhones(result);
+}
+
+/* =========================
+BRAND FILTER
+========================= */
+
+function selectBrand(brand, button) {
+
+currentBrand = brand;
+
+document
+.querySelectorAll(".brand-button")
+.forEach(function(btn) {
+
+btn.classList.remove("active");    
+
+});
+
+button.classList.add("active");
+
+updateCatalog();
+}
+
+/* =========================
+DETAILS PAGE
+========================= */
+
+function openDetails(name) {
+
+const phone =
+phones.find(function(item) {
+
+return item.name === name;    
+
+});
+
+if (!phone) return;
+
+document.getElementById("modalContent").innerHTML = `
+
+<div class="modal-photo">    
+  📱    
+</div>    
+
+<h2>${phone.name}</h2>    
+
+<p>    
+  <b>Бренд:</b> ${phone.brand}    
+</p>    
+
+<p>    
+  ⭐ <b>Оценка:</b> ${phone.rating}/10    
+</p>    
+
+
+<div class="spec-row">    
+
+  <div class="spec-name">    
+    Экран    
+  </div>    
+
+  <div class="spec-value">    
+    ${phone.screen}    
+  </div>    
+
+</div>    
+
+
+<div class="spec-row">    
+
+  <div class="spec-name">    
+    Тип дисплея    
+  </div>    
+
+  <div class="spec-value">    
+    ${phone.display}    
+  </div>    
+
+</div>    
+
+
+<div class="spec-row">    
+
+  <div class="spec-name">    
+    Чипсет    
+  </div>    
+
+  <div class="spec-value">    
+    ${phone.chipset}    
+  </div>    
+
+</div>    
+
+
+<div class="spec-row">    
+
+  <div class="spec-name">    
+    Камера    
+  </div>    
+
+  <div class="spec-value">    
+    ${phone.camera}    
+  </div>    
+
+</div>    
+
+
+<div class="spec-row">    
+
+  <div class="spec-name">    
+    Батарея    
+  </div>    
+
+  <div class="spec-value">    
+    ${phone.battery}    
+  </div>    
+
+</div>    
+
+
+<div class="spec-row">    
+
+  <div class="spec-name">    
+    Оперативная память    
+  </div>    
+
+  <div class="spec-value">    
+    ${phone.ram}    
+  </div>    
+
+</div>    
+
+
+<div class="spec-row">    
+
+  <div class="spec-name">    
+    Память    
+  </div>    
+
+  <div class="spec-value">    
+    ${phone.storage}    
+  </div>    
+
+</div>    
+
+
+<div class="spec-row">    
+
+  <div class="spec-name">    
+    Операционная система    
+  </div>    
+
+  <div class="spec-value">    
+    ${phone.os}    
+  </div>    
+
+</div>
+
+`;
+
+document.getElementById("modal").style.display =
+"block";
+}
+
+/* =========================
+CLOSE DETAILS
+========================= */
+
+function closeModal() {
+
+document.getElementById("modal").style.display =
+"none";
+}
+
+/* =========================
+DARK MODE
+========================= */
+
+function changeTheme() {
+
+document.body.classList.toggle("dark");
+
+const button =
+document.getElementById("theme");
+
+if (
+document.body.classList.contains("dark")
+) {
+
+button.textContent = "☀️";
+
+} else {
+
+button.textContent = "🌙";
+
+}
+
+}
+
+/* =========================
+START
+========================= */
+
+showPhones(phones);
+
+</script>  </body>
+
+</html>
